@@ -6,6 +6,7 @@ class Start(private val autoInitialize:Boolean = true,
             initPopulation()
         ProblemProperties.weightCapacity = this.weightCapacity
         evaluateFitness()
+        RouletteWheel(ProblemProperties.individuals)
     }
     private fun initPopulation(){
         for (i in 0..autoInitializerCount)
