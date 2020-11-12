@@ -23,7 +23,7 @@ class RouletteWheel() {
                     parentArray.add(individuals[index])
 
                     // IMPORTANT: we don't have to remove from fitnessLineArray
-                    // because in roulette wheel spread value is
+                    // because in roulette wheel spread value is from zero to all size
 //                    // change values of fitnessLineArray
 //                    fitnessLineArray.remove(fitnessLine)
 //                    var i = index

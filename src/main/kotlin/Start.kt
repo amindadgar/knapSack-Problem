@@ -9,6 +9,7 @@ class Start(private val autoInitialize:Boolean = true,
         InitPopulation(ProblemProperties.Items)
 
         RouletteWheel().roll(ProblemProperties.Individuals)
+        Mutation(ProblemProperties.Individuals)
     }
     private fun initItems(){
         for (i in 0..autoInitializerCount)

@@ -7,4 +7,5 @@ object ProblemProperties {
     // the second parameter is fitness
     var Individuals:ArrayList<Individual> = arrayListOf()
     const val ParentCount:Int = 15
+    val mutationPoints = Pair(2,5)
 }
