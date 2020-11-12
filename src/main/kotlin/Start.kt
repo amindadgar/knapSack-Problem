@@ -2,22 +2,27 @@ class Start(private val autoInitialize:Boolean = true,
             private val autoInitializerCount:Int = 30,
             private val weightCapacity:Int = 165) {
     init {
+        ProblemProperties.populationCount = autoInitializerCount
         if (autoInitialize)
-            initPopulation()
+            initItems()
         ProblemProperties.weightCapacity = this.weightCapacity
-        evaluateFitness()
-        RouletteWheel(ProblemProperties.individuals)
+        InitPopulation(ProblemProperties.Items)
+
+        RouletteWheel(ProblemProperties.Items)
     }
-    private fun initPopulation(){
+    private fun initItems(){
         for (i in 0..autoInitializerCount)
-            ProblemProperties.individuals.add(
-                Individual(
+            ProblemProperties.Items.add(
+                index = i,
+                element = Item(
                     No = i ,
-                    fitness =  (0..100).random()
+                    fitness =  (0 until 100).random()
+                    ,weight = (0 until 100).random()
                 )
             )
     }
-    private fun evaluateFitness(){
-        Evaluate(ProblemProperties.individuals)
+    private fun initItemsFromFile(){
+        // TODO
     }
+
 }
