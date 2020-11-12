@@ -1,20 +1,43 @@
-class RouletteWheel(private val individuals:ArrayList<Individual>) {
+class RouletteWheel() {
 
-    init {
-        roll()
-    }
-    private fun roll():Individual{
-        val rollArray = arrayListOf<Int>()
+    fun roll(individuals: ArrayList<Individual>):ArrayList<Individual>{
+        val parentArray = arrayListOf<Individual>()
+        // select an individual with probability
+        val fitnessLineArray = arrayListOf<Int>()
+        var weightSum = 0
+        for ((index, individual) in individuals.withIndex()){
+            weightSum += individual.weightSum
+            fitnessLineArray.add(index,weightSum)
+        }
+        println("fitnessLineArray:  $fitnessLineArray")
+        println("fitnessLineArray size:  ${fitnessLineArray.size}")
+        println("individuals size:  ${individuals.size}")
+        // select an individual number
+        // choose parents with count of ParentCount
+        for (parentNo in 0 until ProblemProperties.populationCount) {
+            val randomIndividual = (0 until weightSum).random()
 
-        for (index in 0 until ProblemProperties.individuals.size){
-            // select how many times to add that item in array
-            val repeatCount = (ProblemProperties.individuals[index].probability!! * 10000).toInt()
-            for (i in 0..repeatCount){
-                rollArray.add(index)
+            for ((index, fitnessLine) in fitnessLineArray.withIndex()) {
+                if (randomIndividual <= fitnessLine) {
+
+                    parentArray.add(individuals[index])
+
+                    // IMPORTANT: we don't have to remove from fitnessLineArray
+                    // because in roulette wheel spread value is
+//                    // change values of fitnessLineArray
+//                    fitnessLineArray.remove(fitnessLine)
+//                    var i = index
+//                    while (i < fitnessLineArray.size) {
+//                        fitnessLineArray[i] -= individuals[index].weightSum
+//                        i++
+//                    }
+                    break
+                }
             }
         }
-        val individualNo = (0..ProblemProperties.individuals.size).random()
+        println("parentArray: ${parentArray.size}")
+        println("fitnessLineArray size: ${fitnessLineArray.size}")
 
-        return ProblemProperties.individuals[rollArray[individualNo]]
+        return parentArray
     }
 }

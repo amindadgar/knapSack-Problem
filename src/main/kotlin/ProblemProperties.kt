@@ -6,4 +6,5 @@ object ProblemProperties {
     // individualArray , the first item is showing items are taken or not
     // the second parameter is fitness
     var Individuals:ArrayList<Individual> = arrayListOf()
+    const val ParentCount:Int = 15
 }

@@ -8,7 +8,7 @@ class Start(private val autoInitialize:Boolean = true,
         ProblemProperties.weightCapacity = this.weightCapacity
         InitPopulation(ProblemProperties.Items)
 
-        RouletteWheel(ProblemProperties.Items)
+        RouletteWheel().roll(ProblemProperties.Individuals)
     }
     private fun initItems(){
         for (i in 0..autoInitializerCount)

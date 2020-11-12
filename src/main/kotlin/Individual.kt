@@ -5,7 +5,5 @@
 class Individual(val itemsArray: Array<Boolean?> = Array(ProblemProperties.populationCount){false},
                  var weightSum:Int = 0,
                  var fitness:Int = 0){
-    init {
 
-    }
 }
