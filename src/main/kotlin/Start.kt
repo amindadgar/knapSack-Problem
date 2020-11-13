@@ -15,7 +15,7 @@ class Start(private val autoInitialize:Boolean = true,
         Individuals[NowGeneration] = population
 
         for (i in 0..28) {
-            population = Mutation(Individuals[NowGeneration])
+            population = Crossover(Individuals[NowGeneration])
                     .start()
             NowGeneration++
             population = RouletteWheel().roll(population)
