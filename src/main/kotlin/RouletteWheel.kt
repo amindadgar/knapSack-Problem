@@ -9,9 +9,6 @@ class RouletteWheel() {
             weightSum += individual.weightSum
             fitnessLineArray.add(index,weightSum)
         }
-        println("fitnessLineArray:  $fitnessLineArray")
-        println("fitnessLineArray size:  ${fitnessLineArray.size}")
-        println("individuals size:  ${individuals.size}")
         // select an individual number
         // choose parents with count of ParentCount
         for (parentNo in 0 until ProblemProperties.populationCount) {
@@ -19,24 +16,11 @@ class RouletteWheel() {
 
             for ((index, fitnessLine) in fitnessLineArray.withIndex()) {
                 if (randomIndividual <= fitnessLine) {
-
                     parentArray.add(individuals[index])
-
-                    // IMPORTANT: we don't have to remove from fitnessLineArray
-                    // because in roulette wheel spread value is from zero to all size
-//                    // change values of fitnessLineArray
-//                    fitnessLineArray.remove(fitnessLine)
-//                    var i = index
-//                    while (i < fitnessLineArray.size) {
-//                        fitnessLineArray[i] -= individuals[index].weightSum
-//                        i++
-//                    }
                     break
                 }
             }
         }
-        println("parentArray: ${parentArray.size}")
-        println("fitnessLineArray size: ${fitnessLineArray.size}")
 
         return parentArray
     }

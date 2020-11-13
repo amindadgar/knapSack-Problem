@@ -1,17 +1,30 @@
+import ProblemProperties.Individuals
+import ProblemProperties.NowGeneration
+
 class Start(private val autoInitialize:Boolean = true,
             private val autoInitializerCount:Int = 30,
-            private val weightCapacity:Int = 165) {
+            private val weightCapacity:Int = 200) {
     init {
         ProblemProperties.populationCount = autoInitializerCount
         if (autoInitialize)
-            initItems()
+            initItemsRandom()
         ProblemProperties.weightCapacity = this.weightCapacity
         InitPopulation(ProblemProperties.Items)
 
-        RouletteWheel().roll(ProblemProperties.Individuals)
-        Mutation(ProblemProperties.Individuals)
+        var population = RouletteWheel().roll(Individuals[NowGeneration])
+        Individuals[NowGeneration] = population
+
+        for (i in 0..28) {
+            population = Mutation(Individuals[NowGeneration])
+                    .start()
+            NowGeneration++
+            population = RouletteWheel().roll(population)
+            val calculateAverage = Calculate(population).average()
+            println("Generation No$NowGeneration average: $calculateAverage")
+            Individuals[NowGeneration] = population
+        }
     }
-    private fun initItems(){
+    private fun initItemsRandom(){
         for (i in 0..autoInitializerCount)
             ProblemProperties.Items.add(
                 index = i,

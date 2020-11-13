@@ -25,7 +25,7 @@ class InitPopulation(private val items: ArrayList<Item>) {
             }
             individual.weightSum = weightSum
 
-            ProblemProperties.Individuals.add(individualNo, individual)
+            ProblemProperties.Individuals[ProblemProperties.NowGeneration].add(individualNo, individual)
         }
     }
 }

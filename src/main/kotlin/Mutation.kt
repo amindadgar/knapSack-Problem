@@ -1,9 +1,9 @@
 class Mutation(private val parents:ArrayList<Individual>) {
-    private val newPopulation:ArrayList<Individual> = arrayListOf()
-    init {
-        start()
-    }
-    private fun start(){
+
+    fun start():ArrayList<Individual>{
+        val newPopulation:ArrayList<Individual> = arrayListOf()
+
+
         val firstPoint = ProblemProperties.mutationPoints.first
         val secondPoint = ProblemProperties.mutationPoints.second
         var index = 0
@@ -13,17 +13,17 @@ class Mutation(private val parents:ArrayList<Individual>) {
 
             val firstChild =
                 father.copyOfRange(0, firstPoint) +
-                        mother.copyOfRange(firstPoint + 1, secondPoint) +
-                        father.copyOfRange(secondPoint + 1, father.size)
+                        mother.copyOfRange(firstPoint, secondPoint) +
+                        father.copyOfRange(secondPoint, father.size)
             val secondChild =
                 mother.copyOfRange(0, firstPoint) +
-                        father.copyOfRange(firstPoint + 1, secondPoint) +
-                        mother.copyOfRange(secondPoint + 1, mother.size)
+                        father.copyOfRange(firstPoint, secondPoint) +
+                        mother.copyOfRange(secondPoint, mother.size)
 
             var firstChildWeight = 0
             var firstChildFitness = 0
             firstChild.forEachIndexed { index1, item ->
-                if (item == true) {
+                if (item) {
                     firstChildWeight += ProblemProperties.Items[index1].weight
                     firstChildFitness += ProblemProperties.Items[index1].fitness
                 }
@@ -31,7 +31,7 @@ class Mutation(private val parents:ArrayList<Individual>) {
             var secondChildWeight = 0
             var secondChildFitness = 0
             secondChild.forEachIndexed { index2, item ->
-                if (item == true) {
+                if (item) {
                     secondChildWeight += ProblemProperties.Items[index2].weight
                     secondChildFitness += ProblemProperties.Items[index2].fitness
 
@@ -39,17 +39,16 @@ class Mutation(private val parents:ArrayList<Individual>) {
             }
 
             // if children weight was more than out capacity we would set their fitness to zero
-            if (firstChildWeight > ProblemProperties.weightCapacity)
+            if (firstChildWeight > ProblemProperties.weightCapacity) {
                 firstChildFitness = 0
-            if (secondChildWeight > ProblemProperties.weightCapacity)
+            }
+            if (secondChildWeight > ProblemProperties.weightCapacity) {
                 secondChildFitness = 0
-
+            }
             newPopulation.add(index - 2, Individual(firstChild,firstChildWeight,firstChildFitness))
             newPopulation.add(index - 1, Individual(secondChild,secondChildWeight,secondChildFitness))
         }
 
-        println("parents size: ${parents.size}")
-        println("children size : ${newPopulation.size}")
-
+        return newPopulation
     }
 }
