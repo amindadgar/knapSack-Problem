@@ -3,6 +3,6 @@
 
 fun main(args: Array<String>){
 
-    Start()
+    Start(autoInitialize = false)
 
 }

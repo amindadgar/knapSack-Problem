@@ -5,7 +5,7 @@ class Mutation(private val individuals:ArrayList<Individual>) {
         val newPopulation:ArrayList<Individual> = arrayListOf()
         for ((index,individual) in individuals.withIndex()){
 
-            val rand = (0..individual.itemsArray.size).random()
+            val rand = (0 until individual.itemsArray.size).random()
             val newIndividualItems = individual.itemsArray
             newIndividualItems[rand] = !newIndividualItems[rand]
             var childWeight = 0
