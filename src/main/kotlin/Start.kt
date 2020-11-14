@@ -4,7 +4,7 @@ import java.io.File
 
 class Start(private val autoInitialize:Boolean = true,
             private val autoInitializerCount:Int = 30,
-            private val weightCapacity:Int = 200) {
+            private val weightCapacity:Int = 165) {
     init {
         ProblemProperties.populationCount = autoInitializerCount
         if (autoInitialize) {
@@ -16,27 +16,19 @@ class Start(private val autoInitialize:Boolean = true,
 
 
         InitPopulation(ProblemProperties.Items)
-
+        // select parents
         var population = RouletteWheel().roll(Individuals[NowGeneration])
         Individuals[NowGeneration] = population
 
         for (i in 0 until ProblemProperties.genarationCount - 1) {
-            // if random number was more than 2 we would cross over ( 0.8 probability of cross over )
-            // else we would mutate ( 0.2 probability of mutation )
-            val random = (0..10).random()
-            population = if (random > 2) {
-                println("Cross over")
-                Crossover(Individuals[NowGeneration])
-                    .start()
-            }
-            else {
-                println("Mutation")
-                Mutation(population).start()
-            }
-            val calculateAverage = Calculate(population).average()
-            population = RouletteWheel().roll(population)
-            println("Generation No$NowGeneration average: $calculateAverage")
 
+            val children  = ProduceChildren(Individuals[NowGeneration]).produceChild()
+            val calculateAverage = Calculate(children).average()
+            println("Generation No$NowGeneration average: $calculateAverage")
+            
+            val childrenAndParents = population
+            childrenAndParents.addAll(children)
+            population = RouletteWheel().roll(childrenAndParents)
             // add the new generation !
             Individuals[++NowGeneration] = population
         }

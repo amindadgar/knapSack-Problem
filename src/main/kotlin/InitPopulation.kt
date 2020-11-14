@@ -14,7 +14,8 @@ class InitPopulation(private val items: ArrayList<Item>) {
             val individual = Individual()
             var weightSum = 0
             var i = 0
-            while (weightSum <= populationCount && i < items.size) {
+            while ((weightSum + items[i].weight) <= ProblemProperties.weightCapacity &&
+                i < items.size - 1) {
 
                 if (nextBoolean()) {
                     weightSum += items[i].weight
@@ -24,6 +25,7 @@ class InitPopulation(private val items: ArrayList<Item>) {
                 i++
             }
             individual.weightSum = weightSum
+            println("individual weight $weightSum")
 
             ProblemProperties.Individuals[ProblemProperties.NowGeneration].add(individualNo, individual)
         }
