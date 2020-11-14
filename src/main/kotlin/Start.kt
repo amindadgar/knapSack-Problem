@@ -1,6 +1,7 @@
 import ProblemProperties.Individuals
 import ProblemProperties.NowGeneration
 import java.io.File
+import kotlin.math.max
 
 class Start(private val autoInitialize:Boolean = true,
             private val autoInitializerCount:Int = 30,
@@ -21,10 +22,15 @@ class Start(private val autoInitialize:Boolean = true,
         Individuals[NowGeneration] = population
 
         val calculate = Calculate()
+        var generationMax = 0
         for (i in 0 until ProblemProperties.genarationCount - 1) {
 
             val children  = ProduceChildren(Individuals[NowGeneration]).produceChild()
             println("Generation No$NowGeneration average: ${calculate.average(children)}")
+            val max = calculate.maxFitness(Individuals[NowGeneration])
+            if (generationMax < max){
+                generationMax = max
+            }
             
             val childrenAndParents = population
             childrenAndParents.addAll(children)
@@ -33,8 +39,7 @@ class Start(private val autoInitialize:Boolean = true,
             Individuals[++NowGeneration] = population
         }
         println()
-        val max = calculate.maxFitness(Individuals[NowGeneration])
-        println("max $max")
+        println("max $generationMax")
     }
     private fun initItemsRandom(){
         for (i in 0..autoInitializerCount)
