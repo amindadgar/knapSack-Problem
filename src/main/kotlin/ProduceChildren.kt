@@ -12,17 +12,11 @@ class ProduceChildren(parents:ArrayList<Individual>) {
 
         val firstPoint = ProblemProperties.mutationPoints.first
         val secondPoint = ProblemProperties.mutationPoints.second
-
+        val rolledParents = RouletteWheel().roll(parents)
         var index = 0
-        while (parents.size > 0) {
-            // choose father and mother random
-            var random = (0 until parents.size).random()
-            val father = parents[random].itemsArray
-            parents.remove(parents[random])
-
-            random = (0 until parents.size).random()
-            val mother = parents[random].itemsArray
-            parents.remove(parents[random])
+        while (index < rolledParents.size) {
+            val father = rolledParents[index++].itemsArray
+            val mother = rolledParents[index++].itemsArray
 
             val firstChild =
                 father.copyOfRange(0, firstPoint) +
@@ -40,6 +34,7 @@ class ProduceChildren(parents:ArrayList<Individual>) {
                 firstChild[randomItemNumberMutation] = !firstChild[randomItemNumberMutation]
             }
 
+            // calculate fitness and weight of first child
             var firstChildWeight = 0
             var firstChildFitness = 0
             firstChild.forEachIndexed { index1, item ->
@@ -55,6 +50,8 @@ class ProduceChildren(parents:ArrayList<Individual>) {
                 val randomItemNumberMutation = (0 until secondChild.size).random()
                 secondChild[randomItemNumberMutation] = !secondChild[randomItemNumberMutation]
             }
+
+            // calculate fitness and weight of second child
             var secondChildWeight = 0
             var secondChildFitness = 0
             secondChild.forEachIndexed { index2, item ->
@@ -72,8 +69,8 @@ class ProduceChildren(parents:ArrayList<Individual>) {
             if (secondChildWeight > ProblemProperties.weightCapacity) {
                 secondChildFitness = 0
             }
-            newPopulation.add(index++, Individual(firstChild,firstChildWeight,firstChildFitness))
-            newPopulation.add(index++, Individual(secondChild,secondChildWeight,secondChildFitness))
+            newPopulation.add(index - 2, Individual(firstChild,firstChildWeight,firstChildFitness))
+            newPopulation.add(index - 1, Individual(secondChild,secondChildWeight,secondChildFitness))
         }
 
         return newPopulation
