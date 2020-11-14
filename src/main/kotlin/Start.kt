@@ -1,7 +1,6 @@
 import ProblemProperties.Individuals
 import ProblemProperties.NowGeneration
 import java.io.File
-import kotlin.math.max
 
 class Start(private val autoInitialize:Boolean = true,
             private val autoInitializerCount:Int = 30,
@@ -15,7 +14,7 @@ class Start(private val autoInitialize:Boolean = true,
         else
             initItemsFromFile()
 
-
+        val startTime = System.currentTimeMillis()
         InitPopulation(ProblemProperties.Items)
         // select parents
         var population = RouletteWheel().roll(Individuals[NowGeneration])
@@ -40,6 +39,9 @@ class Start(private val autoInitialize:Boolean = true,
         }
         println()
         println("max $generationMax")
+        val endTime = System.currentTimeMillis()
+        println()
+        println("Execution Time : ${endTime - startTime} ms")
     }
     private fun initItemsRandom(){
         for (i in 0..autoInitializerCount)
