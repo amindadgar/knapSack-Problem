@@ -25,7 +25,7 @@ class InitPopulation(private val items: ArrayList<Item>) {
                 i++
             }
             individual.weightSum = weightSum
-            println("individual weight $weightSum")
+//            println("individual weight $weightSum")
 
             ProblemProperties.Individuals[ProblemProperties.NowGeneration].add(individualNo, individual)
         }

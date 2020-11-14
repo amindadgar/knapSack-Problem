@@ -20,11 +20,11 @@ class Start(private val autoInitialize:Boolean = true,
         var population = RouletteWheel().roll(Individuals[NowGeneration])
         Individuals[NowGeneration] = population
 
+        val calculate = Calculate()
         for (i in 0 until ProblemProperties.genarationCount - 1) {
 
             val children  = ProduceChildren(Individuals[NowGeneration]).produceChild()
-            val calculateAverage = Calculate(children).average()
-            println("Generation No$NowGeneration average: $calculateAverage")
+            println("Generation No$NowGeneration average: ${calculate.average(children)}")
             
             val childrenAndParents = population
             childrenAndParents.addAll(children)
@@ -32,6 +32,9 @@ class Start(private val autoInitialize:Boolean = true,
             // add the new generation !
             Individuals[++NowGeneration] = population
         }
+        println()
+        val max = calculate.maxFitness(Individuals[NowGeneration])
+        println("max $max")
     }
     private fun initItemsRandom(){
         for (i in 0..autoInitializerCount)

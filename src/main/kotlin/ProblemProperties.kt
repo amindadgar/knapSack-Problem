@@ -1,7 +1,7 @@
 object ProblemProperties {
     var weightCapacity:Int = 165
     var Items:ArrayList<Item> = arrayListOf()
-    var populationCount:Int = 30
+    var populationCount:Int = 100
     var genarationCount = 50
     // individualArray , the first item is showing items are taken or not
     // the second parameter is fitness
