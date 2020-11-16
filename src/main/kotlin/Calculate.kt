@@ -2,8 +2,12 @@ class Calculate() {
 
     fun average(Individuals: ArrayList<Individual>):Int{
         var sumOfFitness = 0
+        var zeroFitnessCount = 0
         for (individual in Individuals){
-            sumOfFitness += individual.fitness
+            if (individual.fitness != 0)
+                sumOfFitness += individual.fitness
+            else
+                zeroFitnessCount++
         }
         return sumOfFitness / Individuals.size
     }
