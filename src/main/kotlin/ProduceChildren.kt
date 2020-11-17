@@ -10,11 +10,15 @@ class ProduceChildren(parents:ArrayList<Individual>) {
         val newPopulation:ArrayList<Individual> = arrayListOf()
 
 
-        val firstPoint = ProblemProperties.mutationPoints.first
-        val secondPoint = ProblemProperties.mutationPoints.second
+
         val rolledParents = RouletteWheel().roll(parents)
+
         var index = 0
         while (index < rolledParents.size) {
+            // select mutaion points randomly
+            val firstPoint = (0 until rolledParents[index].itemsArray.size).random()
+            val secondPoint = (firstPoint until rolledParents[index].itemsArray.size).random()
+
             val father = rolledParents[index++].itemsArray
             val mother = rolledParents[index++].itemsArray
 

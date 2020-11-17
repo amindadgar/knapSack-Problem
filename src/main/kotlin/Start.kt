@@ -55,7 +55,7 @@ class Start(private val autoInitialize:Boolean = true,
             )
     }
     private fun initItemsFromFile(){
-        val file = File("src/main/resources/input2.txt")
+        val file = File("src/main/resources/items3.txt")
         var i = 0
         file.forEachLine {
             if (!it.contains(",")){
